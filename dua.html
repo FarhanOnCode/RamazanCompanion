@@ -1,0 +1,1793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ramazan Companion</title>
+    <link rel="icon" type="image/png" href="https://cdn.iconscout.com/icon/free/png-512/free-muslim-prayer-icon-download-in-svg-png-gif-file-formats--mosque-arabian-ramadan-kareem-pack-festival-days-icons-1330433.png?f=webp&w=256">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0e4c92;
+            --secondary-color: #5e9de6;
+            --accent-color: #faaf40;
+            --text-color: #333;
+            --bg-color: #f8f9fa;
+            --card-bg: #fff;
+            --border-radius: 12px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode {
+            --primary-color: #1a5fb4;
+            --secondary-color: #62a0ea;
+            --accent-color: #ffbe6f;
+            --text-color: #e0e0e0;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-bottom: 70px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .app-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0;
+            padding: 5px 0;
+        }
+
+        .toggle-dark-mode {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        nav {
+            padding: 0 10px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: space-around;
+            list-style: none;
+            overflow-x: auto;
+            padding: 10px 0;
+            white-space: nowrap;
+        }
+
+        .nav-tabs li {
+            margin: 0 10px;
+        }
+
+        .nav-tabs a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: background-color 0.2s;
+        }
+
+        .nav-tabs a:hover,
+        .nav-tabs a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        section {
+            margin: 20px 15px;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            transition: background-color 0.3s ease;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        /* Surah Yaseen Section */
+        .surah-container {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+        }
+
+        .verse-container {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .arabic {
+            font-size: 1.8rem;
+            text-align: right;
+            margin-bottom: 10px;
+            line-height: 2;
+            direction: rtl;
+        }
+
+        .transliteration {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
+        .translation {
+            font-size: 1rem;
+        }
+
+        .tafsir {
+            font-size: 0.9rem;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #ddd;
+            color: var(--secondary-color);
+        }
+
+        .audio-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px 0;
+        }
+
+        .audio-btn {
+            background-color: var(--accent-color);
+            margin: 0 10px;
+        }
+
+        /* Iftar & Sehri Section */
+        .location-selector {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+
+        .location-selector label {
+            margin-bottom: 5px;
+        }
+
+        .location-selector select {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+        }
+
+        .countdown-container {
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .countdown {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .time-card {
+            display: flex;
+            justify-content: space-between;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .time-label {
+            font-weight: bold;
+        }
+
+        /* Duas Section */
+        .dua-container {
+            background-color: rgba(94, 157, 230, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            position: relative;
+        }
+
+        .dua-arabic {
+            font-size: 1.5rem;
+            text-align: right;
+            margin-bottom: 10px;
+            direction: rtl;
+        }
+
+        .dua-transliteration {
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .dua-translation {
+            margin-bottom: 10px;
+        }
+
+        .dua-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 10px;
+        }
+
+        .action-btn {
+            background-color: transparent;
+            color: var(--primary-color);
+            padding: 5px;
+            margin-left: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Ramadan Checklist */
+        .checklist-container {
+            margin-top: 15px;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: rgba(94, 157, 230, 0.1);
+            border-radius: 8px;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            margin-right: 15px;
+            transform: scale(1.5);
+        }
+
+        .checklist-item label {
+            flex-grow: 1;
+        }
+
+        .progress-container {
+            margin-top: 20px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background-color: #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: var(--accent-color);
+            border-radius: 5px;
+            width: 0;
+            transition: width 0.3s ease;
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-10 {
+            margin-top: 10px;
+        }
+
+        .mb-10 {
+            margin-bottom: 10px;
+        }
+
+        /* Special Prayer Section */
+        .special-prayers {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: rgba(94, 157, 230, 0.1);
+            border-radius: 8px;
+        }
+
+        .special-prayer {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #ddd;
+        }
+
+        .special-prayer:last-child {
+            border-bottom: none;
+        }
+
+        /* Media Queries for responsive design */
+        @media (min-width: 768px) {
+            section {
+                max-width: 800px;
+                margin: 20px auto;
+            }
+
+            .surah-container {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            .verse-container {
+                width: 48%;
+                margin: 1%;
+            }
+
+            .btn-group {
+                flex-wrap: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="app-title">Ramazan Companion</h1>
+        <button class="toggle-dark-mode" id="toggleDarkMode" aria-label="Toggle dark mode">
+            <i class="fas fa-moon"></i>
+        </button>
+        <nav>
+            <ul class="nav-tabs">
+                <li><a href="#" data-section="home" class="active">Home</a></li>
+                <li><a href="#" data-section="surah-yaseen">Surah Yaseen</a></li>
+                <li><a href="#" data-section="timings">Iftar & Sehri</a></li>
+                <li><a href="#" data-section="duas">Duas</a></li>
+                <li><a href="#" data-section="checklist">Checklist</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Home Section -->
+        <section id="home" class="active-section">
+            <h2>Welcome to Ramadan Companion</h2>
+            <div class="countdown-container">
+                <h3>Next Event</h3>
+                <div id="next-event">Loading...</div>
+                <div class="countdown" id="home-countdown">00:00:00</div>
+            </div>
+
+            <div class="quick-actions mt-10">
+                <h3 class="text-center mb-10">Quick Actions</h3>
+                <div class="btn-group">
+                    <button onclick="changeSection('surah-yaseen')">Read Surah Yaseen</button>
+                    <button onclick="changeSection('timings')">Check Iftar Time</button>
+                    <button onclick="changeSection('duas')">Read Iftar Dua</button>
+                    <button onclick="changeSection('checklist')">Update Checklist</button>
+                </div>
+            </div>
+            
+            <div class="special-prayers">
+                <h3 class="text-center mb-10">Special Prayer for Today</h3>
+                <div class="special-prayer" id="daily-prayer">
+                    <p>Aye Allah, hamari zaban par Kalma-e-Tayyab hamesha jaari rakh.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Surah Yaseen Section -->
+        <section id="surah-yaseen" class="hidden">
+            <h2>Surah Yaseen</h2>
+            <div class="btn-group">
+                <button id="toggleArabic" class="active-toggle">Arabic</button>
+                <button id="toggleTransliteration" class="active-toggle">Transliteration</button>
+                <button id="toggleTranslation" class="active-toggle">Translation</button>
+                <button id="toggleTafsir">Tafsir</button>
+            </div>
+            <div class="audio-controls">
+                <button class="audio-btn" id="playAudio">
+                    <i class="fas fa-play"></i> Play Surah
+                </button>
+                <button class="audio-btn" id="pauseAudio">
+                    <i class="fas fa-pause"></i> Pause
+                </button>
+            </div>
+            <div class="surah-container" id="surahContainer">
+                <!-- Surah Yaseen verses will be dynamically added here -->
+            </div>
+        </section>
+
+        <!-- Iftar & Sehri Timings Section -->
+        <section id="timings" class="hidden">
+            <h2>Iftar & Sehri Timings</h2>
+            <div class="location-selector">
+                <label for="rozaSelect">Select Roza:</label>
+                <select id="rozaSelect">
+                    <option value="">Select Roza</option>
+                    <!-- Options will be dynamically added -->
+                </select>
+            </div>
+            <div class="prayer-times">
+                <div class="time-card">
+                    <span class="time-label">Sehri (Fajr)</span>
+                    <span id="sehri-time">--:--</span>
+                </div>
+                <div class="time-card">
+                    <span class="time-label">Iftar (Maghrib)</span>
+                    <span id="iftar-time">--:--</span>
+                </div>
+            </div>
+            <div class="countdown-container">
+                <h3 id="countdown-label">Time Until Iftar</h3>
+                <div class="countdown" id="iftar-countdown">00:00:00</div>
+            </div>
+        </section>
+
+        <!-- Duas Section -->
+        <section id="duas" class="hidden">
+            <h2>Ramadan Duas</h2>
+            <div class="btn-group">
+                <button onclick="showDua('sehri')">Sehri Niyyah</button>
+                <button onclick="showDua('iftar')">Iftar Dua</button>
+                <button onclick="showDua('taraweeh')">Taraweeh</button>
+                <button onclick="showDua('laylatul')">Laylatul Qadr</button>
+                <button onclick="showDua('ramadan-phase')">Ramadan Phases</button>
+            </div>
+            <div class="dua-container" id="dua-display">
+                <div id="dua-title">Select a Dua</div>
+                <div id="dua-arabic" class="dua-arabic"></div>
+                <div id="dua-transliteration" class="dua-transliteration"></div>
+                <div id="dua-translation" class="dua-translation"></div>
+                <div class="dua-actions">
+                    <button class="action-btn" id="copyDua" title="Copy Dua">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                    <button class="action-btn" id="shareDua" title="Share Dua">
+                        <i class="fas fa-share-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ramadan Checklist Section -->
+        <section id="checklist" class="hidden">
+            <h2>Ramadan Checklist</h2>
+            <div class="checklist-container" id="daily-checklist">
+                <div class="checklist-item">
+                    <input type="checkbox" id="fasting" class="checklist-check">
+                    <label for="fasting">Fasting Today</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="fajr" class="checklist-check">
+                    <label for="fajr">Fajr Prayer</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="dhuhr" class="checklist-check">
+                    <label for="dhuhr">Dhuhr Prayer</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="asr" class="checklist-check">
+                    <label for="asr">Asr Prayer</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="maghrib" class="checklist-check">
+                    <label for="maghrib">Maghrib Prayer</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="isha" class="checklist-check">
+                    <label for="isha">Isha Prayer</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="taraweeh" class="checklist-check">
+                    <label for="taraweeh">Taraweeh Prayer</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="quran" class="checklist-check">
+                    <label for="quran">Read Quran</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="charity" class="checklist-check">
+                    <label for="charity">Give Charity</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" id="dua" class="checklist-check">
+                    <label for="dua">Make Special Dua</label>
+                </div>
+            </div>
+            <div class="progress-container">
+                <h3>Today's Progress</h3>
+                <div class="progress-bar">
+                    <div class="progress" id="progress-bar"></div>
+                </div>
+                <div class="text-center" id="progress-text">0%</div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer-nav">
+        <a href="#" class="nav-item" data-section="home">
+            <div class="nav-icon"><i class="fas fa-home"></i></div>
+            <span>Home</span>
+        </a>
+        <a href="#" class="nav-item" data-section="surah-yaseen">
+            <div class="nav-icon"><i class="fas fa-book-open"></i></div>
+            <span>Yaseen</span>
+        </a>
+        <a href="#" class="nav-item" data-section="timings">
+            <div class="nav-icon"><i class="fas fa-clock"></i></div>
+            <span>Timings</span>
+        </a>
+        <a href="#" class="nav-item" data-section="duas">
+            <div class="nav-icon"><i class="fas fa-hands"></i></div>
+            <span>Duas</span>
+        </a>
+        <a href="#" class="nav-item" data-section="checklist">
+            <div class="nav-icon"><i class="fas fa-tasks"></i></div>
+            <span>Checklist</span>
+        </a>
+    </footer>
+
+    <script>
+        // Sehri and Iftar Times for 30 Days (full month data)
+        const sehriIftarTimes = [
+            { roza: 1, sehri: "05:22 AM", iftar: "06:24 PM" },
+            { roza: 2, sehri: "05:21 AM", iftar: "06:24 PM" },
+            { roza: 3, sehri: "05:20 AM", iftar: "06:24 PM" },
+            { roza: 4, sehri: "05:20 AM", iftar: "06:24 PM" },
+            { roza: 5, sehri: "05:20 AM", iftar: "06:24 PM" },
+            { roza: 6, sehri: "05:18 AM", iftar: "06:25 PM" },
+            { roza: 7, sehri: "05:18 AM", iftar: "06:25 PM" },
+            { roza: 8, sehri: "05:17 AM", iftar: "06:25 PM" },
+            { roza: 9, sehri: "05:17 AM", iftar: "06:25 PM" },
+            { roza: 10, sehri: "05:15 AM", iftar: "06:26 PM" },
+            { roza: 11, sehri: "05:15 AM", iftar: "06:26 PM" },
+            { roza: 12, sehri: "05:14 AM", iftar: "06:26 PM" },
+            { roza: 13, sehri: "05:13 AM", iftar: "06:26 PM" },
+            { roza: 14, sehri: "05:12 AM", iftar: "06:27 PM" },
+            { roza: 15, sehri: "05:11 AM", iftar: "06:27 PM" },
+            { roza: 16, sehri: "05:11 AM", iftar: "06:27 PM" },
+            { roza: 17, sehri: "05:10 AM", iftar: "06:27 PM" },
+            { roza: 18, sehri: "05:09 AM", iftar: "06:27 PM" },
+            { roza: 19, sehri: "05:08 AM", iftar: "06:28 PM" },
+            { roza: 20, sehri: "05:07 AM", iftar: "06:28 PM" },
+            { roza: 21, sehri: "05:07 AM", iftar: "06:28 PM" },
+            { roza: 22, sehri: "05:06 AM", iftar: "06:28 PM" },
+            { roza: 23, sehri: "05:05 AM", iftar: "06:28 PM" },
+            { roza: 24, sehri: "05:04 AM", iftar: "06:29 PM" },
+            { roza: 25, sehri: "05:03 AM", iftar: "06:29 PM" },
+            { roza: 26, sehri: "05:02 AM", iftar: "06:29 PM" },
+            { roza: 27, sehri: "05:02 AM", iftar: "06:29 PM" },
+            { roza: 28, sehri: "05:01 AM", iftar: "06:29 PM" },
+            { roza: 29, sehri: "05:00 AM", iftar: "06:29 PM" },
+        ];
+
+        // Surah Yaseen verses data (first few verses for demonstration)
+        const surahYaseenVerses = [
+            {
+                verseNumber: 1,
+                arabic: "يس",
+                transliteration: "Ya-Seen",
+                translation: "Ya Seen",
+                tafsir: "These are Arabic letters that appear at the beginning of certain surahs. Their exact meaning is known only to Allah."
+            },
+            {
+                verseNumber: 2,
+                arabic: "وَالْقُرْآنِ الْحَكِيمِ",
+                transliteration: "Wal-Quranil-Hakeem",
+                translation: "By the wise Qur'an",
+                tafsir: "Allah swears by the Quran, emphasizing its wisdom and authority as divine guidance."
+            },
+            {
+                verseNumber: 3,
+                arabic: "إِنَّكَ لَمِنَ الْمُرْسَلِينَ",
+                transliteration: "Innaka laminal-mursaleen",
+                translation: "Indeed, you (O Muhammad) are among the messengers",
+                tafsir: "This verse affirms Prophet Muhammad's status as a messenger of Allah, sent to guide humanity."
+            },
+            {
+                verseNumber: 4,
+                arabic: "عَلَىٰ صِرَاطٍ مُّسْتَقِيمٍ",
+                transliteration: "Ala siratim-mustaqeem",
+                translation: "On a straight path",
+                tafsir: "The Prophet was guided on the straight path of truth and righteousness, which is Islam."
+            },
+            {
+                verseNumber: 5,
+                arabic: "تَنزِيلَ الْعَزِيزِ الرَّحِيمِ",
+                transliteration: "Tanzeelal-'Azeezir-Raheem",
+                translation: "A revelation from the Exalted in Might, the Merciful",
+                tafsir: "The Quran is a revelation from Allah, who is both Mighty and Merciful, highlighting His power and compassion."
+            },
+            {
+                "verseNumber": 6,
+                "arabic": "لِتُنذِرَ قَوْمًا مَّا أُنذِرَ آبَاؤُهُمْ فَهُمْ غَافِلُونَ",
+                "transliteration": "Litunzira qawman ma onzira abaa'uhum fahum ghafiloon",
+                "translation": "That you may warn a people whose forefathers were not warned, so they are unaware.",
+                "tafsir": "The Prophet was sent to warn a people who had not received prior messengers for a long time, making them heedless of divine guidance."
+            },
+    {
+        "verseNumber": 7,
+        "arabic": "لَقَدْ حَقَّ الْقَوْلُ عَلَىٰ أَكْثَرِهِمْ فَهُمْ لَا يُؤْمِنُونَ",
+        "transliteration": "Laqad haqqa alqawlu 'ala aktharihim fahum la yu'minoon",
+        "translation": "Certainly, the word has come into effect upon most of them, so they do not believe.",
+        "tafsir": "Most of them have rejected the truth, and their disbelief has been destined due to their persistence in denial."
+    },
+    {
+        "verseNumber": 8,
+        "arabic": "إِنَّا جَعَلْنَا فِي أَعْنَاقِهِمْ أَغْلَالًا فَهِيَ إِلَى الْأَذْقَانِ فَهُمْ مُقْمَحُونَ",
+        "transliteration": "Inna ja'alna fi a'naqihim aghlalan fahiya ilal-adhqani fahum muqmahoon",
+        "translation": "Indeed, We have put shackles on their necks, and they are up to their chins, so their heads are forced up.",
+        "tafsir": "This metaphor describes their arrogance and unwillingness to humble themselves before the truth."
+    },
+    {
+        "verseNumber": 9,
+        "arabic": "وَجَعَلْنَا مِن بَيْنِ أَيْدِيهِمْ سَدًّا وَمِنْ خَلْفِهِمْ سَدًّا فَأَغْشَيْنَاهُمْ فَهُمْ لَا يُبْصِرُونَ",
+        "transliteration": "Waja'alna min bayni aydihim saddan wa min khalfihim saddan fa-aghshaynahum fahum la yubsiroon",
+        "translation": "And We have put a barrier before them and a barrier behind them and covered them, so they do not see.",
+        "tafsir": "This describes their spiritual blindness, preventing them from seeing or accepting the truth."
+    },
+    {
+        "verseNumber": 10,
+        "arabic": "وَسَوَاءٌ عَلَيْهِمْ أَأَنذَرْتَهُمْ أَمْ لَمْ تُنذِرْهُمْ لَا يُؤْمِنُونَ",
+        "transliteration": "Wa sawa'un 'alayhim a-andhartahum am lam tundhirhum la yu'minoon",
+        "translation": "And it is all the same for them, whether you warn them or do not warn them; they will not believe.",
+        "tafsir": "Their hearts are sealed, and they are determined to reject the message, regardless of the Prophet's warnings."
+    },
+    {
+        "verseNumber": 11,
+        "arabic": "إِنَّمَا تُنذِرُ مَنِ اتَّبَعَ الذِّكْرَ وَخَشِيَ الرَّحْمَٰنَ بِالْغَيْبِ ۖ فَبَشِّرْهُ بِمَغْفِرَةٍ وَأَجْرٍ كَرِيمٍ",
+        "transliteration": "Innama tundhiru mani ittaba'a adh-dhikra wa khashiya ar-rahman bil-ghaybi fabashshirhu bi-maghfiratin wa ajrin kareem",
+        "translation": "You can only warn one who follows the message and fears the Most Merciful unseen. So give him good tidings of forgiveness and noble reward.",
+        "tafs-ir": "The warning is effective only for those who are receptive to the message and fear Allah, even in the unseen."
+    },
+    {
+        "verseNumber": 12,
+        "arabic": "إِنَّا نَحْنُ نُحْيِي الْمَوْتَىٰ وَنَكْتُبُ مَا قَدَّمُوا وَآثَارَهُمْ ۚ وَكُلَّ شَيْءٍ أَحْصَيْنَاهُ فِي إِمَامٍ مُّبِينٍ",
+        "transliteration": "Inna nahnu nuhyi al-mawta wa naktubu ma qaddamoo wa atharahum wa kulla shay'in ahsaynahu fi imamim mubeen",
+        "translation": "Indeed, it is We who bring the dead to life and record what they have put forth and what they have left behind, and all things We have enumerated in a clear register.",
+        "tafsir": "Allah emphasizes His power to resurrect the dead and His meticulous record of every person's actions and their lasting impact."
+    },
+    {
+        "verseNumber": 13,
+        "arabic": "وَاضْرِبْ لَهُم مَّثَلًا أَصْحَابَ الْقَرْيَةِ إِذْ جَاءَهَا الْمُرْسَلُونَ",
+        "transliteration": "Wa idrib lahum mathalan ashab al-qaryati idh ja'aha al-mursaloon",
+        "translation": "And present to them an example: the companions of the city, when the messengers came to it -",
+        "tafsir": "Allah instructs the Prophet to tell the story of a city that rejected its messengers as a cautionary tale."
+    },
+    {
+        "verseNumber": 14,
+        "arabic": "إِذْ أَرْسَلْنَا إِلَيْهِمُ اثْنَيْنِ فَكَذَّبُوهُمَا فَعَزَّزْنَا بِثَالِثٍ فَقَالُوا إِنَّا إِلَيْكُمْ مُرْسَلُونَ",
+        "transliteration": "Idh arsalna ilayhimu ithnaini fakadhdhaboohuma fa'azzazna bi-thalithin faqalu inna ilaykum mursaloon",
+        "translation": "When We sent to them two messengers, they denied them, so We strengthened them with a third, and they said, \"Indeed, we are messengers to you.\"",
+        "tafsir": "The story illustrates the persistence of the messengers and the stubbornness of those who reject them."
+    },
+    {
+    "verseNumber": 15,
+    "arabic": "قَالُوا مَا أَنتُمْ إِلَّا بَشَرٌ مِّثْلُنَا وَمَا أَنزَلَ الرَّحْمَٰنُ مِن شَيْءٍ إِنْ أَنتُمْ إِلَّا تَكْذِبُونَ",
+    "transliteration": "Qaloo ma antum illa basharum mithluna wa ma anzala ar-rahmanu min shay'in in antum illa takdhiboon",
+    "translation": "They said, \"You are not but men like us, and the Most Merciful has not revealed a thing. You are only telling lies.\"",
+    "tafsir": "The people of the city accused the messengers of being ordinary humans and denied the divine origin of their message."
+  },
+  {
+    "verseNumber": 16,
+    "arabic": "قَالُوا رَبُّنَا يَعْلَمُ إِنَّا إِلَيْكُمْ لَمُرْسَلُونَ",
+    "transliteration": "Qaloo rabbuna ya'lamu inna ilaykum lamursaloon",
+    "translation": "They [the messengers] said, \"Our Lord knows that we are messengers to you,",
+    "tafsir": "The messengers affirmed their truthfulness and asserted that Allah is witness to their mission."
+  },
+  {
+    "verseNumber": 17,
+    "arabic": "وَمَا عَلَيْنَا إِلَّا الْبَلَاغُ الْمُبِينُ",
+    "transliteration": "Wa ma 'alayna illa al-balagho al-mubeen",
+    "translation": "And our duty is only the clear notification.\"",
+    "tafsir": "The messengers emphasized that their responsibility is solely to convey the message clearly, not to force belief."
+  },
+  {
+    "verseNumber": 18,
+    "arabic": "قَالُوا إِنَّا تَطَيَّرْنَا بِكُمْ ۖ لَئِن لَّمْ تَنتَهُوا لَنَرْجُمَنَّكُمْ وَلَيَمَسَّنَّكُم مِّنَّا عَذَابٌ أَلِيمٌ",
+    "transliteration": "Qaloo inna tatayyarna bikum la'in lam tantahoo lanarjumannakum wa layamassannakum minna 'adhabun aleem",
+    "translation": "They said, \"Indeed, we consider you a bad omen. If you do not desist, we will surely stone you, and there will surely touch you, from us, a painful punishment.\"",
+    "tafsir": "The people resorted to superstition and threatened the messengers with harm if they didn't stop preaching."
+  },
+  {
+    "verseNumber": 19,
+    "arabic": "قَالُوا طَائِرُكُم مَّعَكُمْ ۚ أَئِن ذُكِّرْتُم ۚ بَلْ أَنتُمْ قَوْمٌ مُّسْرِفُونَ",
+    "transliteration": "Qaloo taa'irukum ma'akum a'in dhukkirtum bal antum qawmum musrifoon",
+    "translation": "They said, \"Your bad omen is with yourselves. Is it because you were reminded? Rather, you are a transgressing people.\"",
+    "tafsir": "The messengers refuted their superstition, highlighting that their misfortune was due to their own rejection of the truth."
+  },
+  {
+    "verseNumber": 20,
+    "arabic": "وَجَاءَ مِنْ أَقْصَى الْمَدِينَةِ رَجُلٌ يَسْعَىٰ قَالَ يَا قَوْمِ اتَّبِعُوا الْمُرْسَلِينَ",
+    "transliteration": "Wa jaa'a min aqsa al-madinati rajulun yas'a qala ya qawmi ittabi'oo al-mursaleen",
+    "translation": "And a man came from the farthest end of the city, running. He said, \"O my people, follow the messengers",
+    "tafsir": "A believer from the outskirts of the city rushed to support the messengers and urged the people to follow them."
+  },
+  {
+    "verseNumber": 21,
+    "arabic": "اتَّبِعُوا مَن لَّا يَسْأَلُكُمْ أَجْرًا وَهُم مُّهْتَدُونَ",
+    "transliteration": "Ittabi'oo man laa yas'alukum ajran wa hum muhtadoon",
+    "translation": "Follow those who do not ask of you [any] payment, and they are [rightly] guided.",
+    "tafsir": "He emphasized the sincerity of the messengers, who sought no reward for their guidance."
+  },
+  {
+    "verseNumber": 22,
+    "arabic": "وَمَا لِيَ لَا أَعْبُدُ الَّذِي فَطَرَنِي وَإِلَيْهِ تُرْجَعُونَ",
+    "transliteration": "Wa ma liya la a'budu alladhi fatarani wa ilayhi turja'oon",
+    "translation": "And why should I not worship He who created me and to whom you will be returned?",
+    "tafsir": "He questioned why anyone would reject the worship of their Creator, to whom they will ultimately return."
+  },
+  {
+    "verseNumber": 23,
+    "arabic": "أَأَتَّخِذُ مِن دُونِهِ آلِهَةً إِن يُرِدْنِ الرَّحْمَٰنُ بِضُرٍّ لَّا تُغْنِ عَنِّي شَفَاعَتُهُمْ شَيْئًا وَلَا يُنقِذُونِ",
+    "transliteration": "A'attakhidhu min doonihi aalihatan in yuridni ar-rahmanu bidhurrin la tughni 'anni shafa'atuhum shay'an wa la yunqidhoon",
+    "translation": "Should I take besides Him gods [whose intercession] would not avail me at all if the Most Merciful intended me harm, and they would not be able to rescue me?",
+    "tafsir": "He rejected the worship of false gods, recognizing that they have no power to help or protect against Allah's will."
+  },
+  {
+    "verseNumber": 24,
+    "arabic": "إِنِّي إِذًا لَّفِي ضَلَالٍ مُّبِينٍ",
+    "transliteration": "Inni idhan lafi dalalin mubeen",
+    "translation": "Indeed, I would then be in manifest error.",
+    "tafsir": "He acknowledged that worshipping anything other than Allah would be a clear deviation from the truth."
+  },
+  {
+    "verseNumber": 25,
+    "arabic": "إِنِّي آمَنْتُ بِرَبِّكُمْ فَاسْمَعُونِ",
+    "transliteration": "Inni aamantu birabbikum fasma'oon",
+    "translation": "Indeed, I have believed in your Lord, so listen to me.\"",
+    "tafsir": "He declared his faith in Allah and urged the people to heed his words."
+  },
+  {
+    "verseNumber": 26,
+    "arabic": "قِيلَ ادْخُلِ الْجَنَّةَ ۖ قَالَ يَا لَيْتَ قَوْمِي يَعْلَمُونَ",
+    "transliteration": "Qila idkhuli al-jannata qala ya layta qawmi ya'lamoon",
+    "translation": "It was said, \"Enter Paradise.\" He said, \"Oh, I wish that my people could know",
+    "tafsir": "Upon his death, he was granted Paradise. He expressed his longing for his people to know the truth and attain the same reward."
+  },
+  {
+    "verseNumber": 27,
+    "arabic": "بِمَا غَفَرَ لِي رَبِّي وَجَعَلَنِي مِنَ الْمُكْرَمِينَ",
+    "transliteration": "Bima ghafara li rabbi wa ja'alani mina al-mukrameen",
+    "translation": "That my Lord has forgiven me and placed me among the honored.\"",
+    "tafsir": "He rejoiced in Allah's forgiveness and his elevated status in the Hereafter."
+  },
+  {
+    "verseNumber": 28,
+    "arabic": "وَمَا أَنزَلْنَا عَلَىٰ قَوْمِهِ مِن بَعْدِهِ مِن جُندٍ مِّنَ السَّمَاءِ وَمَا كُنَّا مُنزِلِينَ",
+    "transliteration": "Wa ma anzalna 'ala qawmihi min ba'dihi min jundin mina as-samaa'i wa ma kunna munzileen",
+    "translation": "And We did not send down upon his people after him any soldiers from the sky, nor would We have been to send down.",
+    "tafsir": "Allah clarifies that He didn't send any heavenly forces to punish the people after the believer's death."
+  },
+  {
+    "verseNumber": 29,
+    "arabic": "إِن كَانَتْ إِلَّا صَيْحَةً وَاحِدَةً فَإِذَا هُمْ خَامِدُونَ",
+    "transliteration": "In kanat illa sayhatan wahidatan fa-idha hum khaamidoon",
+    "translation": "It was but one shout, and immediately they were extinguished.",
+    "tafsir": "Their destruction came swiftly with a single blast, leaving them lifeless."
+  },
+  {
+    "verseNumber": 30,
+    "arabic": "يَا حَسْرَةً عَلَى الْعِبَادِ ۚ مَا يَأْتِيهِم مِّن رَّسُولٍ إِلَّا كَانُوا بِهِ يَسْتَهْزِئُونَ",
+    "transliteration": "30.Ya hasratan 'ala al-'ibad ma ya'teehim min rasoolin illa kanoo bihi yastahzi'oon",
+    "translation": "Alas for the servants. There did not come to them any messenger except that they used to ridicule him.",
+    "tafsir": "This verse laments the tragic fate of those who mocked and rejected the messengers sent to guide them."
+  },
+  {
+    "verseNumber": 31,
+    "arabic": "أَلَمْ يَرَوْا كَمْ أَهْلَكْنَا قَبْلَهُم مِّنَ الْقُرُونِ أَنَّهُمْ إِلَيْهِمْ لَا يَرْجِعُونَ",
+    "transliteration": "Alam yaraw kam ahlakna qablahum mina al-quruni annahum ilayhim la yarji'oon",
+    "translation": "Have they not considered how many generations We destroyed before them that they to them will not return?",
+    "tafsir": "This verse reminds people of the past nations destroyed due to their disbelief, emphasizing that they won't return to this world."
+  },
+  {
+    "verseNumber": 32,
+    "arabic": "وَإِن كُلٌّ لَّمَّا جَمِيعٌ لَّدَيْنَا مُحْضَرُونَ",
+    "transliteration": "Wa in kullun lamma jamee'un ladayna muhdaroon",
+    "translation": "And indeed, all of them will yet be brought present before Us.",
+    "tafsir": "It asserts that every individual will be gathered and brought before Allah on the Day of Judgment."
+  },
+  {
+    "verseNumber": 33,
+    "arabic": "وَآيَةٌ لَّهُمُ الْأَرْضُ الْمَيْتَةُ أَحْيَيْنَاهَا وَأَخْرَجْنَا مِنْهَا حَبًّا فَمِنْهُ يَأْكُلُونَ",
+    "transliteration": "Wa ayatul lahumu al-ardu al-mayyitatu ahyaynaha wa akhrajna minha habban faminhu ya'kuloon",
+    "translation": "And a sign for them is the dead earth. We have brought it to life and brought forth from it grain, and from it they eat.",
+    "tafsir": "The revival of dead land is presented as a sign of Allah's power to resurrect the dead."
+  },
+  {
+    "verseNumber": 34,
+    "arabic": "وَجَعَلْنَا فِيهَا جَنَّاتٍ مِّن نَّخِيلٍ وَأَعْنَابٍ وَفَجَّرْنَا فِيهَا مِنَ الْعُيُونِ",
+    "transliteration": "Wa ja'alna feeha jannatin min nakhilin wa a'nabin wa fajjarna feeha mina al-'uyoon",
+    "translation": "And We placed therein gardens of palm trees and grapevines and caused to burst forth therefrom some springs",
+    "tafsir": "Allah's creation of gardens, palm trees, grapevines, and springs is mentioned as further evidence of His power and blessings."
+  },
+  {
+    "verseNumber": 35,
+    "arabic": "لِيَأْكُلُوا مِن ثَمَرِهِ وَمَا عَمِلَتْهُ أَيْدِيهِمْ ۖ أَفَلَا يَشْكُرُونَ",
+    "transliteration": "Liya'kuloo min thamarhi wa ma 'amilathu aydeehim afala yashkuroon",
+    "translation": "That they may eat of His fruit - and their hands have not produced it. Then will they not be grateful?",
+    "tafsir": "People are reminded that the fruits they enjoy are from Allah, and they should be grateful for His provisions."
+  },
+  {
+    "verseNumber": 36,
+    "arabic": "سُبْحَانَ الَّذِي خَلَقَ الْأَزْوَاجَ كُلَّهَا مِمَّا تُنبِتُ الْأَرْضُ وَمِنْ أَنفُسِهِمْ وَمِمَّا لَا يَعْلَمُونَ",
+    "transliteration": "Subhana alladhi khalaqa al-azwaja kullaha mimma tunbitu al-ardu wa min anfusihim wa mimma la ya'lamoon",
+    "translation": "Exalted is He who created all pairs - from what the earth grows and from themselves and from that which they do not know.",
+    "tafsir": "Allah is glorified for creating pairs in all things, including plants, animals, humans, and things unknown to humans."
+  },
+  {
+    "verseNumber": 37,
+    "arabic": "وَآيَةٌ لَّهُمُ اللَّيْلُ نَسْلَخُ مِنْهُ النَّهَارَ فَإِذَا هُم مُّظْلِمُونَ",
+    "transliteration": "Wa ayatul lahumu al-laylu naslakhu minhu an-nahara fa-idha hum muzhlimoon",
+    "translation": "And a sign for them is the night. We remove from it [the light of] day, so they are [left] in darkness.",
+    "tafsir": "The alternation of night and day is presented as another sign of Allah's power and the order in His creation."
+  },
+  {
+    "verseNumber": 38,
+    "arabic": "وَالشَّمْسُ تَجْرِي لِمُسْتَقَرٍّ لَّهَا ۚ ذَٰلِكَ تَقْدِيرُ الْعَزِيزِ الْعَلِيمِ",
+    "transliteration": "Wa ash-shamsu tajri limustaqarrin laha dhalika taqdeeru al-'azeez al-'aleem",
+    "translation": "And the sun runs [on course] toward its stopping point. That is the determination of the Exalted in Might, the Knowing.",
+    "tafsir": "The sun's movement towards its destined place is highlighted, emphasizing Allah's control over the universe."
+  },
+  {
+    "verseNumber": 39,
+    "arabic": "وَالْقَمَرَ قَدَّرْنَاهُ مَنَازِلَ حَتَّىٰ عَادَ كَالْعُرْجُونِ الْقَدِيمِ",
+    "transliteration": "Wa al-qamara qaddarnahu manazila hatta 'ada kaal-'urjooni al-qadeem",
+    "translation": "And the moon - We have determined for it phases, until it returns [appearing] like the old date stalk.",
+    "tafsir": "The moon's phases are described, showing Allah's precise design and control over its cycle."
+  },
+  {
+    "verseNumber": 40,
+    "arabic": "لَا الشَّمْسُ يَنبَغِي لَهَا أَن تُدْرِكَ الْقَمَرَ وَلَا اللَّيْلُ سَابِقُ النَّهَارِ ۚ وَكُلٌّ فِي فَلَكٍ يَسْبَحُونَ",
+    "transliteration": "La ash-shamsu yanbaghi laha an tudrika al-qamara wa la al-laylu sabiqu an-nahari wa kullun fi falakin yasbahoon",
+    "translation": "It is not allowable for the sun to reach the moon, nor does the night overtake the day, but each, in an orbit, is swimming.",
+    "tafsir": "The distinct orbits of the sun and moon are mentioned, highlighting the order and balance in the cosmos."
+  },
+  {
+    "verseNumber": 41,
+    "arabic": "وَآيَةٌ لَّهُمْ أَنَّا حَمَلْنَا ذُرِّيَّتَهُمْ فِي الْفُلْكِ الْمَشْحُونِ",
+    "transliteration": "Wa ayatul lahum anna hamalna dhurriyyatahum fi al-fulki al-mashhoon",
+    "translation": "And a sign for them is that We carried their descendants in the laden ship.",
+    "tafsir": "The story of Noah's Ark is referenced, where Allah saved Noah and his descendants from the flood."
+  },
+  {
+    "verseNumber": 42,
+    "arabic": "وَخَلَقْنَا لَهُم مِّن مِّثْلِهِ مَا يَرْكَبُونَ",
+    "transliteration": "Wa khalaqna lahum mim mithlihi ma yarkaboon",
+    "translation": "And We created for them from the likes of it that which they ride.",
+    "tafsir": "Allah's creation of various means of transport, similar to the Ark, is mentioned as a blessing."
+  },
+  {
+    "verseNumber": 44,
+    "arabic": "إِلَّا رَحْمَةً مِّنَّا وَمَتَاعًا إِلَىٰ حِينٍ",
+    "transliteration": "Illa rahmatan minna wa mataa'an ilaa heen",
+    "translation": "Except as a mercy from Us and provision for a time.",
+    "tafsir": "Allah clarifies that saving people from drowning is an act of mercy and allows them to enjoy life for a destined period."
+  },
+  {
+    "verseNumber": 45,
+    "arabic": "وَإِذَا قِيلَ لَهُمُ اتَّقُوا مَا بَيْنَ أَيْدِيكُمْ وَمَا خَلْفَكُمْ لَعَلَّكُمْ تُرْحَمُونَ",
+    "transliteration": "Wa idha qeela lahum ittaqoo ma bayna aydeekum wa ma khalfakum la'allakum turhamoon",
+    "translation": "And when it is said to them, \"Fear what is before you and what is behind you that you may receive mercy.\"",
+    "tafsir": "People are urged to fear the consequences of their actions in this life and the Hereafter to attain Allah's mercy."
+  },
+  {
+    "verseNumber": 46,
+    "arabic": "وَمَا تَأْتِيهِم مِّنْ آيَةٍ مِّنْ آيَاتِ رَبِّهِمْ إِلَّا كَانُوا عَنْهَا مُعْرِضِينَ",
+    "transliteration": "Wa ma ta'teehim min ayatin min ayati rabbihim illa kanoo 'anha mu'rideen",
+    "translation": "And no sign comes to them from the signs of their Lord except that they turn away from it.",
+    "tafsir": "Despite the numerous signs, they persistently turn away from the truth and refuse to believe."
+  },
+  {
+    "verseNumber": 47,
+    "arabic": "وَإِذَا قِيلَ لَهُمْ أَنفِقُوا مِمَّا رَزَقَكُمُ اللَّهُ قَالَ الَّذِينَ كَفَرُوا لِلَّذِينَ آمَنُوا أَنُطْعِمُ مَن لَّوْ يَشَاءُ اللَّهُ أَطْعَمَهُ إِنْ أَنتُمْ إِلَّا فِي ضَلَالٍ مُّبِينٍ",
+    "transliteration": "Wa idha qeela lahum anfiqoo mimma razaqakum Allahu qala alladheena kafaroo lilla dheena aamanoo anut'imu man law yashaa Allahu at'amahu in antum illa fee dalalin mubeen",
+    "translation": "And when it is said to them, \"Spend from that which Allah has provided for you,\" those who disbelieve say to those who believe, \"Should we feed one whom, if Allah had willed, He would have fed? You are not but in clear error.\"",
+    "tafsir": "The disbelievers refuse to spend in charity, using a flawed argument to justify their miserliness."
+  },
+  {
+    "verseNumber": 48,
+    "arabic": "وَيَقُولُونَ مَتَىٰ هَٰذَا الْوَعْدُ إِن كُنتُمْ صَادِقِينَ",
+    "transliteration": "Wa yaqooloona mata hadha al-wa'du in kuntum sadiqeen",
+    "translation": "And they say, \"When is this promise, if you should be truthful?",
+    "tafsir": "They challenge the believers about the Day of Judgment, mocking their belief in the unseen."
+  },
+  {
+    "verseNumber": 49,
+    "arabic": "مَا يَنظُرُونَ إِلَّا صَيْحَةً وَاحِدَةً تَأْخُذُهُمْ وَهُمْ يَخِصِّمُونَ",
+    "transliteration": "Ma yanzuroona illa sayhatan wahidatan ta'khudhuhum wa hum yakhissimoon",
+    "translation": "They await only one shout that will seize them while they are disputing.",
+    "tafsir": "They will be caught off guard by a single blast that will destroy them while they are engrossed in worldly affairs."
+  },
+  {
+    "verseNumber": 50,
+    "arabic": "فَلَا يَسْتَطِيعُونَ تَوْصِيَةً وَلَا إِلَىٰ أَهْلِهِمْ يَرْجِعُونَ",
+    "transliteration": "Fala yastatee'oona tawsiyatun wa la ilaa ahlihim yarji'oon",
+    "translation": "And they will not be able [to leave] any bequest, nor to their people will they return.",
+    "tafsir": "The suddenness of their demise will leave them no opportunity to make any arrangements or return to their families."
+  },
+  {
+    "verseNumber": 51,
+    "arabic": "وَنُفِخَ فِي الصُّورِ فَإِذَا هُم مِّنَ الْأَجْدَاثِ إِلَىٰ رَبِّهِمْ يَنسِلُونَ",
+    "transliteration": "Wa nufikha fee as-soori fa-idha hum mina al-ajdath ilaa rabbihim yansiloon",
+    "translation": "And the Horn will be blown; and at once from the graves to their Lord they will hasten.",
+    "tafsir": "The blowing of the Horn will signal the resurrection, and people will rise from their graves and rush towards Allah."
+  },
+  {
+    "verseNumber": 52,
+    "arabic": "قَالُوا يَا وَيْلَنَا مَن بَعَثَنَا مِن مَّرْقَدِنَا ۜ ۗ هَٰذَا مَا وَعَدَ الرَّحْمَٰنُ وَصَدَقَ الْمُرْسَلُونَ",
+    "transliteration": "Qaloo ya waylana man ba'athana min marqadina hadha ma wa'ada ar-rahmanu wa sadaqa al-mursaloon",
+    "translation": "They will say, \"O woe to us! Who has raised us up from our sleeping place?\" [It will be said], \"This is what the Most Merciful had promised, and the messengers told the truth.\"",
+    "tafsir": "People will be bewildered upon resurrection, but they will be reminded of Allah's promise and the truthfulness of His messengers."
+  },
+  {
+    "verseNumber": 53,
+    "arabic": "إِن كَانَتْ إِلَّا صَيْحَةً وَاحِدَةً فَإِذَا هُمْ جَمِيعٌ لَّدَيْنَا مُحْضَرُونَ",
+    "transliteration": "In kanat illa sayhatan wahidatan fa-idha hum jamee'un ladayna muhdaroon",
+    "translation": "It will be but one shout, and at once they are all brought present before Us.",
+    "tafsir": "With a single command, all of humanity will be gathered before Allah for judgment."
+  },
+  {
+    "verseNumber": 54,
+    "arabic": "فَالْيَوْمَ لَا تُظْلَمُ نَفْسٌ شَيْئًا وَلَا تُجْزَوْنَ إِلَّا مَا كُنتُمْ تَعْمَلُونَ",
+    "transliteration": "Faal-yawma la tuzlamu nafsun shay'an wa la tujzawna illa ma kuntum ta'maloon",
+    "translation": "So Today, no soul will be wronged at all, and you will not be recompensed except for what you used to do.",
+    "tafsir": "Justice will prevail on the Day of Judgment, and everyone will be held accountable for their deeds."
+  },
+  {
+    "verseNumber": 55,
+    "arabic": "إِنَّ أَصْحَابَ الْجَنَّةِ الْيَوْمَ فِي شُغُلٍ فَاكِهُونَ",
+    "transliteration": "Inna ashaba al-jannati al-yawma fee shughulin faakihoon",
+    "translation": "Indeed, the companions of Paradise, that Day, will be amused in [joyful] occupation",
+    "tafsir": "The inhabitants of Paradise will be immersed in bliss and enjoyment."
+  },
+  {
+    "verseNumber": 56,
+    "arabic": "هُمْ وَأَزْوَاجُهُمْ فِي ظِلَالٍ عَلَى الْأَرَائِكِ مُتَّكِئُونَ",
+    "transliteration": "Hum wa azwajuhum fee zilalin 'ala al-araa'iki muttaki'oon",
+    "translation": "They and their spouses - in shade, reclining on adorned couches.",
+    "tafsir": "They will enjoy comfort and companionship in Paradise."
+  },
+  {
+    "verseNumber": 57,
+    "arabic": "لَهُمْ فِيهَا فَاكِهَةٌ وَلَهُم مَّا يَدَّعُونَ",
+    "transliteration": "Lahum feeha faakihatun wa lahum ma yadda'oon",
+    "translation": "For them therein is fruit, and for them is whatever they request [or wish]",
+    "tafsir": "They will have abundant fruits and anything they desire."
+  },
+    {
+    "verseNumber": 58,
+    "arabic": "سَلَامٌ قَوْلًا مِّن رَّبٍّ رَّحِيمٍ",
+    "transliteration": "Salamun qawlan min rabbin raheem",
+    "translation": "\"Peace\" [will be] a word from a Merciful Lord.",
+    "tafsir": "They will be greeted with peace and blessings from Allah, the Most Merciful."
+  },
+  {
+    "verseNumber": 59,
+    "arabic": "وَامْتَازُوا الْيَوْمَ أَيُّهَا الْمُجْرِمُونَ",
+    "transliteration": "Wa imtazoo al-yawma ayyuha al-mujrimoon",
+    "translation": "And [it will be said], \"Be separated, today, O you criminals.",
+    "tafsir": "The criminals will be separated from the righteous and condemned to their punishment."
+  },
+  {
+    "verseNumber": 60,
+    "arabic": "أَلَمْ أَعْهَدْ إِلَيْكُمْ يَا بَنِي آدَمَ أَن لَّا تَعْبُدُوا الشَّيْطَانَ ۖ إِنَّهُ لَكُمْ عَدُوٌّ مُّبِينٌ",
+    "transliteration": "Alam a'had ilaykum ya banee adama an la ta'budoo ash-shaytana innahu lakum 'aduwwun mubeen",
+    "translation": "Did I not enjoin upon you, O children of Adam, that you not worship Satan - [for] indeed, he is to you a clear enemy -",
+    "tafsir": "Allah reminds humanity of His command to avoid worshipping Satan, who is their avowed enemy."
+  },
+  {
+    "verseNumber": 61,
+    "arabic": "وَأَنِ اعْبُدُونِي ۚ هَٰذَا صِرَاطٌ مُّسْتَقِيمٌ",
+    "transliteration": "Wa ani i'budooni hadha siratun mustaqeem",
+    "translation": "And that you worship [only] Me? This is a straight path.",
+    "tafsir": "Allah reiterates His command to worship Him alone, emphasizing that this is the path to righteousness."
+  },
+  {
+    "verseNumber": 62,
+    "arabic": "وَلَقَدْ أَضَلَّ مِنكُمْ جِبِلًّا كَثِيرًا ۖ أَفَلَمْ تَكُونُوا تَعْقِلُونَ",
+    "transliteration": "Wa laqad adalla minkum jibillan katheeran afalam takoonoo ta'qiloon",
+    "translation": "And he had already led astray from among you much of creation, so did you not use reason?",
+    "tafsir": "Satan has misled many people, and they are questioned for not using their intellect to recognize the truth."
+  },
+  {
+    "verseNumber": 63,
+    "arabic": "هَٰذِهِ جَهَنَّمُ الَّتِي كُنتُمْ تُوعَدُونَ",
+    "transliteration": "Hadhihi jahannamu allatee kuntum too'adoon",
+    "translation": "This is the Hellfire which you were promised.",
+    "tafsir": "The disbelievers are shown Hellfire, which they were warned about."
+  },
+  {
+    "verseNumber": 64,
+    "arabic": "اصْلَوْهَا الْيَوْمَ بِمَا كُنتُمْ تَكْفُرُونَ",
+    "transliteration": "Islawaha al-yawma bima kuntum takfuroon",
+    "translation": "Burn therein today for what you used to disbelieve.",
+    "tafsir": "They are condemned to Hellfire as a consequence of their disbelief."
+  },
+  {
+    "verseNumber": 65,
+    "arabic": "الْيَوْمَ نَخْتِمُ عَلَىٰ أَفْوَاهِهِمْ وَتُكَلِّمُنَا أَيْدِيهِمْ وَتَشْهَدُ أَرْجُلُهُم بِمَا كَانُوا يَكْسِبُونَ",
+    "transliteration": "Al-yawma nakhtimu 'ala afwahihim wa tukallimuna aydeehim wa tashhadu arjuluhum bima kanoo yaksiboon",
+    "translation": "Today, We will seal over their mouths, and their hands will speak to Us, and their feet will testify about what they used to earn.",
+    "tafsir": "On the Day of Judgment, the disbelievers will be unable to speak in their defense, and their own body parts will testify against them."
+  },
+  {
+    "verseNumber": 66,
+    "arabic": "وَلَوْ نَشَاءُ لَطَمَسْنَا عَلَىٰ أَعْيُنِهِمْ فَاسْتَبَقُوا الصِّرَاطَ فَأَنَّىٰ يُبْصِرُونَ",
+    "transliteration": "Wa law nashaa' laṭamasna 'alaa a'yunihim fastabaqoo aṣ-ṣiraṭa fa'anna yubṣiroon",
+    "translation": "And if We willed, We could surely have wiped away their eyes, so they would race to [find] the path. But how could they see?",
+    "tafsir": "Even if Allah had blinded them, they would still be unable to find guidance due to their stubbornness."
+  },
+  {
+    "verseNumber": 67,
+    "arabic": "وَلَوْ نَشَاءُ لَمَسَخْنَاهُمْ عَلَىٰ مَكَانَتِهِمْ فَمَا اسْتَطَاعُوا مُضِيًّا وَلَا يَرْجِعُونَ",
+    "transliteration": "Wa law nashaa' lamasakhnahum 'alaa makaanatihim fama istaṭa'oo muḍiyyan wa laa yarji'oon",
+    "translation": "And if We willed, We could have transformed them in place, so they would not be able to proceed, nor would they return.",
+    "tafsir": "Allah has the power to transform them into any form, rendering them immobile and unable to escape their fate."
+  },
+  {
+    "verseNumber": 68,
+    "arabic": "وَمَن نُعَمِّرْهُ نُنَكِّسْهُ فِي الْخَلْقِ ۖ أَفَلَا يَعْقِلُونَ",
+    "transliteration": "Wa man nu'ammirhu nunakkis-hu fee al-khalq afala ya'qiloon",
+    "translation": "And he to whom We grant long life We reduce in [physical] stature. Then do they not understand?",
+    "tafsir": "The physical decline that comes with old age is a reminder of human weakness and the inevitable end."
+  },
+  {
+    "verseNumber": 69,
+    "arabic": "وَمَا عَلَّمْنَاهُ الشِّعْرَ وَمَا يَنبَغِي لَهُ ۚ إِنْ هُوَ إِلَّا ذِكْرٌ وَقُرْآنٌ مُّبِينٌ",
+    "transliteration": "Wa ma 'allamnahu ash-shi'ra wa ma yanbaghi lahu in huwa illa dhikr wa quranun mubeen",
+    "translation": "And We have not taught him poetry, nor is it befitting for him. It is but a reminder and a clear Qur'an",
+    "tafsir": "This verse clarifies that the Quran is not poetry but a divine reminder and a clear revelation."
+  },
+  {
+    "verseNumber": 70,
+    "arabic": "لِّيُنذِرَ مَن كَانَ حَيًّا وَيَحِقَّ الْقَوْلُ عَلَى الْكَافِرِينَ",
+    "transliteration": "Liyundhira man kaana ḥayyan wa yaḥiqqa al-qawlu 'alaa al-kaafireen",
+    "translation": "To warn whoever is alive and justify [the punishment of] the disbelievers.",
+    "tafsir": "The Quran's purpose is to warn those who are receptive and to establish the truth of the disbelievers' punishment."
+  },
+  {
+    "verseNumber": 71,
+    "arabic": "أَوَلَمْ يَرَوْا أَنَّا خَلَقْنَا لَهُم مِّمَّا عَمِلَتْ أَيْدِينَا أَنْعَامًا فَهُمْ لَهَا مَالِكُونَ",
+    "transliteration": "Awalam yaraw anna khalaqna lahum mimma 'amilat aydeena an'aaman fahum laha malikoon",
+    "translation": "Have they not seen that We created for them from what Our hands have made, livestock, and they are their owners?",
+    "tafsir": "The creation of livestock for human benefit is mentioned as a sign of Allah's blessings."
+  },
+  {
+    "verseNumber": 72,
+    "arabic": "وَذَلَّلْنَاهَا لَهُمْ فَمِنْهَا رَكُوبُهُمْ وَمِنْهَا يَأْكُلُونَ",
+    "transliteration": "Wa dhallalnaha lahum faminha rakoobuhum wa minha ya'kuloon",
+    "translation": "And We have subdued them for them, so some of them they ride, and some of them they eat.",
+    "tafsir": "Allah has made livestock subservient to humans, providing them with transportation and sustenance."
+  },
+  {
+    "verseNumber": 73,
+    "arabic": "وَلَهُمْ فِيهَا مَنَافِعُ وَمَشَارِبُ ۖ أَفَلَا يَشْكُرُونَ",
+    "transliteration": "Wa lahum feeha manaafi'u wa mashaaribu afala yashkuroon",
+    "translation": "And for them therein are [other] benefits and drinks. Then will they not be grateful?",
+    "tafsir": "Livestock provides various benefits and drinks, and people are questioned for their lack of gratitude."
+  },
+  {
+    "verseNumber": 74,
+    "arabic": "وَاتَّخَذُوا مِن دُونِ اللَّهِ آلِهَةً لَّعَلَّهُمْ يُنصَرُونَ",
+    "transliteration": "Wa ittakhadhoo min dooni Allahi aalihatan la'allahum yunṣaroon",
+    "translation": "And they have taken besides Allah [false] deities that they would be helped.",
+    "tafsir": "Despite Allah's blessings, they turn to false gods for help, which is futile."
+  },
+  {
+    "verseNumber": 75,
+    "arabic": "لَا يَسْتَطِيعُونَ نَصْرَهُمْ وَهُمْ لَهُمْ جُندٌ مُّحْضَرُونَ",
+    "transliteration": "Laa yastatee'oona naṣrahum wa hum lahum jundun muḥḍaroon",
+    "translation": "They are not able to help them, while they [themselves] are for them a host brought forth [for punishment].",
+    "tafsir": "False gods are powerless to help their worshippers and will be brought forth as witnesses against them on the Day of Judgment."
+  },
+  {
+    "verseNumber": 76,
+    "arabic": "فَلَا يَحْزُنكَ قَوْلُهُمْ ۘ إِنَّا نَعْلَمُ مَا يُسِرُّونَ وَمَا يُعْلِنُونَ",
+    "transliteration": "Fala yaḥzunka qawluhum inna na'lamu ma yusirroona wa ma yu'linoon",
+    "translation": "So let not their speech grieve you. Indeed, We know what they conceal and what they declare.",
+    "tafsir": "The Prophet is advised not to be saddened by the disbelievers' words, as Allah knows their hidden and open actions."
+  },
+  {
+    "verseNumber": 77,
+    "arabic": "أَوَلَمْ يَرَ الْإِنسَانُ أَنَّا خَلَقْنَاهُ مِن نُّطْفَةٍ فَإِذَا هُوَ خَصِيمٌ مُّبِينٌ",
+    "transliteration": "Awalam yara al-insanu anna khalaqnahu min nuṭfatin fa'idha huwa khaṣeemun mubeen",
+    "translation": "Does man not consider that We created him from a [sperm] drop - then at once he is a clear adversary?",
+    "tafsir": "Humans are reminded of their humble origin from a sperm drop, yet they become arrogant and deny their Creator."
+  },
+  {
+    "verseNumber": 78,
+    "arabic": "وَضَرَبَ لَنَا مَثَلًا وَنَسِيَ خَلْقَهُ ۖ قَالَ مَن يُحْيِي الْعِظَامَ وَهِيَ رَمِيمٌ",
+    "transliteration": "Wa ḍaraba lanaa mathalan wa nasee khlaqahu qala man yuhyee al-'iẓaama wa hiya rameem",
+    "translation": "And he presents for Us an example and forgets his [own] creation. He says, \"Who will give life to bones while they are disintegrated?\"",
+    "tafsir": "The disbelievers question the possibility of resurrection, forgetting that Allah created them from nothing."
+  },
+  {
+    "verseNumber": 79,
+    "arabic": "قُلْ يُحْيِيهَا الَّذِي أَنشَأَهَا أَوَّلَ مَرَّةٍ ۖ وَهُوَ بِكُلِّ خَلْقٍ عَلِيمٌ",
+    "transliteration": "Qul yuḥyeehaa alladhee ansha'ahaa awwala marrah wa huwa bikulli khalqin 'aleem",
+    "translation": "Say, \"He will give them life who produced them the first time; and He is, of all creation, Knowing.\"",
+    "tafsir": "Allah, who created humans initially, has the power to resurrect them. He has knowledge of all creation."
+  },
+  {
+    "verseNumber": 80,
+    "arabic": "الَّذِي جَعَلَ لَكُم مِّنَ الشَّجَرِ الْأَخْضَرِ نَارًا فَإِذَا أَنتُم مِّنْهُ تُوقِدُونَ",
+    "transliteration": "Alladhee ja'ala lakum mina ash-shajari al-akhdari naaran fa'idha antum minhu tooqidoon",
+    "translation": "[It is] He who made for you from the green tree, fire, and then from it you ignite.",
+    "tafsir": "The ability to produce fire from green trees is mentioned as a sign of Allah's power and the wonders of His creation."
+  },
+  {
+    "verseNumber": 81,
+    "arabic": "أَوَلَيْسَ الَّذِي خَلَقَ السَّمَاوَاتِ وَالْأَرْضَ بِقَادِرٍ عَلَىٰ أَن يَخْلُقَ مِثْلَهُم ۚ بَلَىٰ وَهُوَ الْخَلَّاقُ الْعَلِيمُ",
+    "transliteration": "Awalaysa alladhee khalaqa as-samaawaati wa al-arḍa biqaadirin 'alaa an yakhluqa mithlahum balaa wa huwa al-khallaaqu al-'aleem",
+    "translation": "Is not He who created the heavens and the earth Able to create the likes of them? Yes, [it is so]; and He is the Knowing Creator.",
+    "tafsir": "Allah, the Creator of the vast heavens and earth, is certainly capable of recreating humans. He is the All-Knowing and the Creator."
+  },
+  {
+    "verseNumber": 82,
+    "arabic": "إِنَّمَا أَمْرُهُ إِذَا أَرَادَ شَيْئًا أَن يَقُولَ لَهُ كُن فَيَكُونُ",
+    "transliteration": "Innamaa amruhu idha araada shay'an an yaqoola lahu kun fayakoon",
+    "translation": "His command is only when He intends a thing that He says to it, \"Be,\" and it is.",
+    "tafsir": "Allah's power is absolute; when He wills something, He merely commands it to be, and it comes into existence."
+  },
+  {
+    "verseNumber": 83,
+    "arabic": "فَسُبْحَانَ الَّذِي بِيَدِهِ مَلَكُوتُ كُلِّ شَيْءٍ وَإِلَيْهِ تُرْجَعُونَ",
+    "transliteration": "Fasubḥaana alladhee biyadihi malakootu kulli shay'in wa'ilayhi turja'oon",
+    "translation": "So exalted is He in whose hand is the realm of all things, and to Him you will be returned.",
+    "tafsir": "The Surah concludes by glorifying Allah, who has absolute dominion over all creation, and reminding humanity of their return to Him."
+  }
+        ];
+
+        // Duas data
+        const duas = {
+            sehri: {
+                title: "Sehri Ki Niyat (Dua for Suhoor)",
+                arabic: "وَبِصَوْمِ غَدٍ نَّوَيْتُ مِنْ شَهْرِ رَمَضَانَ",
+                transliteration: "Wa bisawmi ghadin nawaitu min shahri Ramadhan",
+                translation: "I intend to keep the fast for tomorrow in the month of Ramadan."
+            },
+            iftar: {
+                title: "Iftar Ki Dua (Dua for Breaking Fast)",
+                arabic: "اللَّهُمَّ إِنِّي لَكَ صُمْتُ وَبِكَ آمَنْتُ وَعَلَيْكَ تَوَكَّلْتُ وَعَلَىٰ رِزْقِكَ أَفْطَرْتُ",
+                transliteration: "Allahumma inni laka sumtu wa bika aamantu wa 'alayka tawakkaltu wa 'ala rizq-ika-aftartu",
+                translation: "O Allah! I fasted for You, I believe in You, I put my trust in You, and with Your sustenance, I break my fast."
+            },
+            taraweeh: {
+                title: "Taraweeh Prayer Dua",
+                arabic: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْجَنَّةَ وَأَعُوذُ بِكَ مِنَ النَّارِ",
+                transliteration: "Allahumma inni as'alukal jannata wa a'udhu bika minan naar",
+                translation: "O Allah! I ask You for Paradise and seek refuge in You from the Fire."
+            },
+            laylatul: {
+                title: "Laylatul Qadr Dua",
+                arabic: "اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي",
+                transliteration: "Allahumma innaka afuwwun tuhibbul afwa fa'fu anni",
+                translation: "O Allah, You are Most Forgiving, and You love to forgive, so forgive me."
+            },
+            "ramadan-phase": {
+                title: "Duas for Different Phases of Ramadan",
+                arabic: "",
+                transliteration: "",
+                translation: "",
+                phases: [
+                    {
+                        title: "First 10 Days (Days of Mercy)",
+                        arabic: "يَا رَحْمَانُ ارْحَمْنِي",
+                        transliteration: "Ya Rahmanu irhamni",
+                        translation: "O Most Merciful, have mercy on me."
+                    },
+                    {
+                        title: "Second 10 Days (Days of Forgiveness)",
+                        arabic: "يَا غَفُورُ اغْفِرْ لِي",
+                        transliteration: "Ya Ghafooru ighfir li",
+                        translation: "O Forgiving One, forgive me."
+                    },
+                    {
+                        title: "Last 10 Days (Days of Seeking Protection)",
+                        arabic: "اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي",
+                        transliteration: "Allahumma innaka afuwwun tuhibbul afwa fa'fu anni",
+                        translation: "O Allah, You are Most Forgiving, and You love to forgive, so forgive me."
+                    }
+                ]
+            }
+        };
+
+        // Special prayers for each day
+        const specialPrayers = [
+            "Aye Allah, hamari zaban par Kalma-e-Tayyab hamesha jaari rakh.",
+            "Aye Allah, hamein kaamil imaan naseeb farma aur puri hidayat ataa farma.",
+            "Aye Allah, hamein pure ramzan ki nematein, anwar-o-barkaat se mala-maal farma.",
+            "Aye Allah, ham par Apni rahmat naazil farma, karam ki barish farma aur rizq-e-halaal ataa farma.",
+            "Aye Allah, hamein deen-e-Islam ke ahkaam par mukammal taur par amal karne wala bana de.",
+            "Aye Allah, hamein apna mohtaj bana, kisi gair ka mohtaj na bana.",
+            "Aye Allah, Tu hamein laiylat-ul-qadr naseeb farma.",
+            "Aye Allah, hamein Hajj maqbul-o-mabrur naseeb farma.",
+            "Aye Allah, hamein jhoot, gheebat, bughz-o-kina, burai-o-jhagde fasad se door rakh.",
+            "Aye Allah, ham se tangdasti, khouf, ghabrahat aur qarz ke bojh ko door farma.",
+            "Aye Allah, ham ko dajjal ke fitne, shaitan aur nafs ke shar se mahfooz rakh.",
+            "Aye Allah, hamare sageerah aur kabeerah gunaho ka muaf farma.",
+            "Aye Allah, aurato ko parde ki puri-puri pabandi karne ki taufeeq ataa farma.",
+            "Aye Allah, har chhoti-badi bimari se hamein aur kul momineen-o-momeenat ko mahfuz rakh.",
+            "Aye Allah, hamein taqwa aur parhezgaari ataa farma.",
+            "Aye Allah, hamein Rasool-Allah, Muhammad (ﷺ sallAllahu alaihi wasallam) ki sunnat par chalne ki taufeeq ataa kar.",
+            "Aye Allah, hamein Rasool-Allah, Muhammad (ﷺ sallAllahu alaihi wasallam) ke pyare tariqe par qaayam rakh.",
+            "Aye Allah, hamein qayamat ke din Rasool-Allah, Muhammad (ﷺ sallAllahu alaihi wasallam) ke haath se jaam-e-kausar peena naseeb farma.",
+            "Aye Allah, hamein qayamat ke din Rasool-Allah, Muhammad (ﷺ sallAllahu alaihi wasallam) ki shafaat naseeb farma.",
+            "Aye Allah, Tu apni muhabbat aur Rasool-Allah, Muhammad (ﷺ sallAllahu alaihi wasallam) ki muhabbat hamare dilo me daal de.",
+            "Aye Allah, hamein maut ki sakhti se aur qabr ke azaab se bacha.",
+            "Aye Allah, munkar-o-nakeer ke sawalaat ham par aasaan farma.",
+            "Aye Allah, hamein qayamat ke roz Apna deedar naseeb farma.",
+            "Aye Allah, hamein qayamat ki garmi se, jahannam ki aag se mahfooz farma.",
+            "Aye Allah, hamein Jannat-ul-firdous mein jagah ataa farma.",
+            "Aye Allah, naam-e-aamaal hamare dahine haath me naseeb farma.",
+            "Aye Allah, hamein aur tamaam mominein-o-momeenat ko hashr ki ruswaayiyoon se bacha.",
+            "Aye Allah, Apne arsh ke saaye mein jagah ataa farma.",
+            "Aye Allah, pul seraat par se bijli ki tarah guzarne ki taufeeq ataa farma.",
+            "Aye Allah, tamaam musalman, jo is duniya se jaa chuke hain, un sabki maghfirat farma. (Aameen)"
+        ];
+
+        // Global variables
+        let darkMode = false;
+        let audioPlayer = null;
+        let countdownInterval = null;
+        let currentRoza = 1; // Default to first day
+
+        // DOM ready function
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize app
+            initApp();
+            setupEventListeners();
+            populateRozaSelect();
+            updateDailyPrayer();
+            checkDarkModePreference();
+        });
+
+        // Initialize the app
+        function initApp() {
+            // Set current section
+            const defaultSection = localStorage.getItem('lastSection') || 'home';
+            changeSection(defaultSection);
+
+            // Load Surah Yaseen
+            loadSurahYaseen();
+
+            // Start countdowns
+            updateTimings();
+            startCountdowns();
+
+            // Load checklist values from localStorage
+            loadChecklistValues();
+            updateProgress();
+        }
+
+        // Setup all event listeners
+        function setupEventListeners() {
+            // Navigation tabs
+            document.querySelectorAll('.nav-tabs a, .footer-nav a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const section = this.getAttribute('data-section');
+                    changeSection(section);
+                });
+            });
+
+            // Toggle dark mode
+            document.getElementById('toggleDarkMode').addEventListener('click', toggleDarkMode);
+
+            // Surah Yaseen toggles
+            document.getElementById('toggleArabic').addEventListener('click', toggleSurahFeature);
+            document.getElementById('toggleTransliteration').addEventListener('click', toggleSurahFeature);
+            document.getElementById('toggleTranslation').addEventListener('click', toggleSurahFeature);
+            document.getElementById('toggleTafsir').addEventListener('click', toggleSurahFeature);
+
+            // Audio controls
+            document.getElementById('playAudio').addEventListener('click', playAudio);
+            document.getElementById('pauseAudio').addEventListener('click', pauseAudio);
+
+            // Roza select
+            document.getElementById('rozaSelect').addEventListener('change', function() {
+                const selectedRoza = parseInt(this.value);
+                if (selectedRoza) {
+                    currentRoza = selectedRoza;
+                    updateTimings();
+                }
+            });
+
+            // Checklist items
+            document.querySelectorAll('.checklist-check').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    saveChecklistValues();
+                    updateProgress();
+                });
+            });
+
+            // Copy Dua button
+            document.getElementById('copyDua').addEventListener('click', copyDua);
+            
+            // Share Dua button
+            document.getElementById('shareDua').addEventListener('click', shareDua);
+        }
+
+        // Change active section
+        function changeSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('main section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.remove('hidden');
+            
+            // Update active tab in navbar
+            document.querySelectorAll('.nav-tabs a').forEach(tab => {
+                if (tab.getAttribute('data-section') === sectionId) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+            
+            // Update active tab in footer nav
+            document.querySelectorAll('.footer-nav a').forEach(tab => {
+                if (tab.getAttribute('data-section') === sectionId) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+            
+            // Save last visited section
+            localStorage.setItem('lastSection', sectionId);
+        }
+
+        // Toggle dark mode
+        function toggleDarkMode() {
+            darkMode = !darkMode;
+            document.body.classList.toggle('dark-mode', darkMode);
+            
+            // Update icon
+            const icon = document.querySelector('.toggle-dark-mode i');
+            if (darkMode) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+            
+            // Save preference
+            localStorage.setItem('darkMode', darkMode ? 'dark' : 'light');
+        }
+
+        // Check for dark mode preference
+        function checkDarkModePreference() {
+            const savedMode = localStorage.getItem('darkMode');
+            if (savedMode === 'dark') {
+                darkMode = true;
+                document.body.classList.add('dark-mode');
+                const icon = document.querySelector('.toggle-dark-mode i');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+        }
+
+        // Load Surah Yaseen verses
+        function loadSurahYaseen() {
+            const container = document.getElementById('surahContainer');
+            container.innerHTML = '';
+            
+            surahYaseenVerses.forEach(verse => {
+                const verseElement = document.createElement('div');
+                verseElement.className = 'verse-container';
+                verseElement.innerHTML = `
+                    <div class="arabic">${verse.arabic}</div>
+                    <div class="transliteration">${verse.transliteration}</div>
+                    <div class="translation">${verse.translation}</div>
+                    <div class="tafsir hidden">${verse.tafsir}</div>
+                `;
+                container.appendChild(verseElement);
+            });
+        }
+
+        // Toggle Surah Yaseen features (Arabic, Transliteration, etc.)
+        function toggleSurahFeature(e) {
+            const button = e.target;
+            const feature = button.id.replace('toggle', '').toLowerCase();
+            
+            if (feature === 'tafsir') {
+                button.classList.toggle('active-toggle');
+                document.querySelectorAll('.tafsir').forEach(el => {
+                    el.classList.toggle('hidden');
+                });
+            } else {
+                // For others, we toggle visibility but keep active-toggle
+                button.classList.toggle('active-toggle');
+                
+                if (feature === 'arabic') {
+                    document.querySelectorAll('.arabic').forEach(el => {
+                        el.style.display = button.classList.contains('active-toggle') ? 'block' : 'none';
+                    });
+                } else if (feature === 'transliteration') {
+                    document.querySelectorAll('.transliteration').forEach(el => {
+                        el.style.display = button.classList.contains('active-toggle') ? 'block' : 'none';
+                    });
+                } else if (feature === 'translation') {
+                    document.querySelectorAll('.translation').forEach(el => {
+                        el.style.display = button.classList.contains('active-toggle') ? 'block' : 'none';
+                    });
+                }
+            }
+        }
+
+        // Play Surah Yaseen audio
+        function playAudio() {
+            if (!audioPlayer) {
+                // This is a placeholder - in a real app, link to an actual Surah Yaseen recitation
+                audioPlayer = new Audio('https://server7.mp3quran.net/basit/036.mp3');
+                audioPlayer.addEventListener('ended', function() {
+                    document.getElementById('playAudio').style.display = 'inline-block';
+                    document.getElementById('pauseAudio').style.display = 'none';
+                });
+            }
+            
+            audioPlayer.play();
+            document.getElementById('playAudio').style.display = 'none';
+            document.getElementById('pauseAudio').style.display = 'inline-block';
+        }
+
+        // Pause Surah Yaseen audio
+        function pauseAudio() {
+            if (audioPlayer) {
+                audioPlayer.pause();
+                document.getElementById('playAudio').style.display = 'inline-block';
+                document.getElementById('pauseAudio').style.display = 'none';
+            }
+        }
+
+        // Populate Roza select dropdown
+        function populateRozaSelect() {
+            const select = document.getElementById('rozaSelect');
+            
+            // Clear existing options
+            select.innerHTML = '<option value="">Select Roza</option>';
+            
+            // Add options for each day
+            sehriIftarTimes.forEach(day => {
+                const option = document.createElement('option');
+                option.value = day.roza;
+                option.textContent = `Roza ${day.roza}`;
+                select.appendChild(option);
+            });
+            
+            // Automatically select today's roza (for demo, we'll use the first day)
+            // In a real app, this would be calculated based on the current date during Ramadan
+            const today = new Date();
+            // This is a placeholder - in reality we would calculate the actual current Roza
+            // based on the Hijri calendar and the start of Ramadan
+            const currentDay = Math.min(30, today.getDate() % 30 || 30);
+            currentRoza = currentDay;
+            select.value = currentRoza;
+        }
+
+        // Update prayer timings display
+        function updateTimings() {
+            const timings = sehriIftarTimes.find(day => day.roza === currentRoza);
+            
+            if (timings) {
+                document.getElementById('sehri-time').textContent = timings.sehri;
+                document.getElementById('iftar-time').textContent = timings.iftar;
+                
+                // Reset and start new countdown
+                if (countdownInterval) {
+                    clearInterval(countdownInterval);
+                }
+                startCountdowns();
+            }
+        }
+
+        // Start countdowns for Iftar/Sehri
+        function startCountdowns() {
+            updateCountdowns();
+            countdownInterval = setInterval(updateCountdowns, 1000);
+        }
+
+        // Update countdown values
+        function updateCountdowns() {
+            const now = new Date();
+            const dayTimings = sehriIftarTimes.find(day => day.roza === currentRoza);
+            
+            if (!dayTimings) return;
+            
+            // Parse times
+            const sehriParts = dayTimings.sehri.match(/(\d+):(\d+) (AM|PM)/);
+            const iftarParts = dayTimings.iftar.match(/(\d+):(\d+) (AM|PM)/);
+            
+            if (!sehriParts || !iftarParts) return;
+            
+            // Create Date objects for Sehri and Iftar
+            const sehriDate = new Date();
+            let sehriHour = parseInt(sehriParts[1]);
+            if (sehriParts[3] === 'PM' && sehriHour !== 12) sehriHour += 12;
+            if (sehriParts[3] === 'AM' && sehriHour === 12) sehriHour = 0;
+            sehriDate.setHours(sehriHour, parseInt(sehriParts[2]), 0, 0);
+            
+            const iftarDate = new Date();
+            let iftarHour = parseInt(iftarParts[1]);
+            if (iftarParts[3] === 'PM' && iftarHour !== 12) iftarHour += 12;
+            if (iftarParts[3] === 'AM' && iftarHour === 12) iftarHour = 0;
+            iftarDate.setHours(iftarHour, parseInt(iftarParts[2]), 0, 0);
+            
+            // If sehri time has passed for today, set it to tomorrow
+            if (now > sehriDate) {
+                sehriDate.setDate(sehriDate.getDate() + 1);
+            }
+            
+            // If iftar time has passed for today, set it to tomorrow
+            if (now > iftarDate) {
+                iftarDate.setDate(iftarDate.getDate() + 1);
+            }
+            
+            // Determine which event is next
+            let nextEvent, timeUntil, eventName;
+            
+            if (sehriDate < iftarDate) {
+                nextEvent = sehriDate;
+                eventName = "Sehri";
+            } else {
+                nextEvent = iftarDate;
+                eventName = "Iftar";
+            }
+            
+            timeUntil = nextEvent - now;
+            
+            // Update countdown displays
+            document.getElementById('countdown-label').textContent = `Time Until ${eventName}`;
+            document.getElementById('iftar-countdown').textContent = formatTimeRemaining(timeUntil);
+            
+            // Update home countdown
+            document.getElementById('next-event').textContent = `Next: ${eventName}`;
+            document.getElementById('home-countdown').textContent = formatTimeRemaining(timeUntil);
+        }
+
+        // Format time remaining for countdowns
+        function formatTimeRemaining(ms) {
+            if (ms < 0) return "00:00:00";
+            
+            const totalSeconds = Math.floor(ms / 1000);
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+            
+            return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // Show selected dua
+        function showDua(duaType) {
+            const duaData = duas[duaType];
+            const duaTitle = document.getElementById('dua-title');
+            const duaArabic = document.getElementById('dua-arabic');
+            const duaTransliteration = document.getElementById('dua-transliteration');
+            const duaTranslation = document.getElementById('dua-translation');
+            
+            if (duaType === 'ramadan-phase') {
+                // Show phases
+                duaTitle.textContent = duaData.title;
+                duaArabic.innerHTML = '';
+                duaTransliteration.innerHTML = '';
+                duaTranslation.innerHTML = '';
+                
+                duaData.phases.forEach(phase => {
+                    duaArabic.innerHTML += `<div><strong>${phase.title}</strong></div><div>${phase.arabic}</div><br>`;
+                    duaTransliteration.innerHTML += `<div><strong>${phase.title}</strong></div><div>${phase.transliteration}</div><br>`;
+                    duaTranslation.innerHTML += `<div><strong>${phase.title}</strong></div><div>${phase.translation}</div><br>`;
+                });
+            } else {
+                // Regular dua
+                duaTitle.textContent = duaData.title;
+                duaArabic.textContent = duaData.arabic;
+                duaTransliteration.textContent = duaData.transliteration;
+                duaTranslation.textContent = duaData.translation;
+            }
+        }
+
+        // Copy dua to clipboard
+        function copyDua() {
+            const duaTitle = document.getElementById('dua-title').textContent;
+            const duaArabic = document.getElementById('dua-arabic').textContent;
+            const duaTransliteration = document.getElementById('dua-transliteration').textContent;
+            const duaTranslation = document.getElementById('dua-translation').textContent;
+            
+            const textToCopy = `${duaTitle}\n\n${duaArabic}\n\n${duaTransliteration}\n\n${duaTranslation}`;
+            
+            // Use Clipboard API if available
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(textToCopy)
+                    .then(() => {
+                        alert('Dua copied to clipboard!');
+                    })
+                    .catch(err => {
+                        console.error('Failed to copy: ', err);
+                        fallbackCopy(textToCopy);
+                    });
+            } else {
+                fallbackCopy(textToCopy);
+            }
+        }
+
+        // Fallback copy method
+        function fallbackCopy(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            document.body.appendChild(textarea);
+            textarea.select();
+            
+            try {
+                document.execCommand('copy');
+                alert('Dua copied to clipboard!');
+            } catch (err) {
+                console.error('Failed to copy: ', err);
+                alert('Failed to copy. Please select and copy manually.');
+            }
+            
+            document.body.removeChild(textarea);
+        }
+
+        // Share dua
+        function shareDua() {
+            const duaTitle = document.getElementById('dua-title').textContent;
+            const duaArabic = document.getElementById('dua-arabic').textContent;
+            const duaTransliteration = document.getElementById('dua-transliteration').textContent;
+            const duaTranslation = document.getElementById('dua-translation').textContent;
+            
+            const textToShare = `${duaTitle}\n\n${duaArabic}\n\n${duaTransliteration}\n\n${duaTranslation}`;
+            
+            // Use Web Share API if available
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Ramadan Dua',
+                    text: textToShare
+                })
+                .catch(err => {
+                    console.error('Error sharing: ', err);
+                    alert('Sharing failed. Please copy and share manually.');
+                });
+            } else {
+                // Fallback if Web Share API not available
+                copyDua();
+                alert('Share functionality not available on this browser. The dua has been copied to your clipboard instead.');
+            }
+        }
+
+        // Load checklist values from localStorage
+        function loadChecklistValues() {
+            document.querySelectorAll('.checklist-check').forEach(checkbox => {
+                const id = checkbox.id;
+                const isChecked = localStorage.getItem(`checklist_${id}`) === 'true';
+                checkbox.checked = isChecked;
+            });
+        }
+
+        // Save checklist values to localStorage
+        function saveChecklistValues() {
+            document.querySelectorAll('.checklist-check').forEach(checkbox => {
+                const id = checkbox.id;
+                localStorage.setItem(`checklist_${id}`, checkbox.checked);
+            });
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('.checklist-check');
+            const totalItems = checkboxes.length;
+            
+            let completedItems = 0;
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    completedItems++;
+                }
+            });
+            
+            const progressPercent = totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0;
+            
+            document.getElementById('progress-bar').style.width = `${progressPercent}%`;
+            document.getElementById('progress-text').textContent = `${progressPercent}%`;
+        }
+
+        // Update daily prayer
+        function updateDailyPrayer() {
+            const today = new Date();
+            // Get day of month (or can be mapped to Ramadan day)
+            const day = (today.getDate() - 1) % specialPrayers.length;
+            
+            document.getElementById('daily-prayer').innerHTML = `
+                <p>${specialPrayers[day]}</p>
+            `;
+        }
+
+        // Add footer navigation styling that was missing
+        document.head.insertAdjacentHTML('beforeend', `
+            <style>
+                .footer-nav {
+                    display: flex;
+                    justify-content: space-around;
+                    align-items: center;
+                    background-color: var(--primary-color);
+                    color: white;
+                    position: fixed;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    padding: 10px 0;
+                    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+                }
+                
+                .footer-nav a {
+                    color: white;
+                    text-decoration: none;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    font-size: 0.8rem;
+                }
+                
+                .footer-nav .nav-icon {
+                    font-size: 1.2rem;
+                    margin-bottom: 5px;
+                }
+                
+                .footer-nav a.active {
+                    color: var(--accent-color);
+                }
+            </style>
+        `);
+        </script>
+        </body>
+    </html>
